@@ -82,9 +82,9 @@
 }
 
 - (void)testResponseSerializerCanBeArchivedAndUnarchived {
-    NSData *archive = [self archivedDataWithRootObject:self.responseSerializer];
+    NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:self.responseSerializer];
     XCTAssertNotNil(archive);
-    AFPropertyListResponseSerializer *unarchivedSerializer = [self unarchivedObjectOfClass:[AFPropertyListResponseSerializer class] fromData:archive];
+    AFPropertyListResponseSerializer *unarchivedSerializer = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
     XCTAssertNotNil(unarchivedSerializer);
     XCTAssertNotEqual(unarchivedSerializer, self.responseSerializer);
     XCTAssertTrue(unarchivedSerializer.format == self.responseSerializer.format);

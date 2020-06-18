@@ -46,8 +46,7 @@
     [super tearDown];
     self.networkActivityIndicatorManager = nil;
 
-    [self.sessionManager invalidateSessionCancelingTasks:YES resetSession:NO];
-    self.sessionManager = nil;
+    [self.sessionManager invalidateSessionCancelingTasks:YES];
 }
 
 #pragma mark -
@@ -70,7 +69,6 @@
     [self.sessionManager
      GET:@"/delay/1"
      parameters:nil
-     headers:nil
      progress:nil
      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
          [requestExpectation fulfill];
@@ -97,7 +95,6 @@
     [self.sessionManager
      GET:@"/status/404"
      parameters:nil
-     headers:nil
      progress:nil
      success:nil
      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -131,7 +128,6 @@
     [self.sessionManager
      GET:@"/delay/2"
      parameters:nil
-     headers:nil
      progress:nil
      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
          requestEndTime = CACurrentMediaTime();
@@ -161,7 +157,6 @@
     [self.sessionManager
      GET:@"/delay/4"
      parameters:nil
-     headers:nil
      progress:nil
      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
          [requestExpectation fulfill];
@@ -172,7 +167,6 @@
     [self.sessionManager
      GET:@"/delay/2"
      parameters:nil
-     headers:nil
      progress:nil
      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
 
@@ -182,20 +176,6 @@
 
     [self waitForExpectationsWithCommonTimeout];
 
-}
-
-- (void)testThatIndicatorKVOOnlyTriggerOnce {
-    // create new one indicator manager
-    AFNetworkActivityIndicatorManager *manager = [AFNetworkActivityIndicatorManager new];
-    __block NSInteger kvoTriggerCount = 0;
-    
-    XCTKVOExpectation *activityCountExpectation = [[XCTKVOExpectation alloc] initWithKeyPath:@"activityCount" object:manager];
-    activityCountExpectation.handler = ^BOOL(id  _Nonnull observedObject, NSDictionary * _Nonnull change) {
-        kvoTriggerCount += 1;
-        return [change[NSKeyValueChangeNewKey] isEqualToNumber:@(1)];
-    };
-    [manager incrementActivityCount];
-    XCTAssertTrue(kvoTriggerCount == 1);
 }
 
 @end
