@@ -68,12 +68,12 @@ EOS
     ss.public_header_files = 'AFNetworking/AF{URL,HTTP}SessionManager.h', 'AFNetworking/AFCompatibilityMacros.h'
   end
 
-  # s.subspec 'UIKit' do |ss|
-  #   ss.ios.deployment_target = '7.0'
-  #   ss.tvos.deployment_target = '9.0'
-  #   ss.dependency 'AFNetworking/NSURLSession'
+  s.subspec 'UIKit' do |ss|
+    ss.ios.deployment_target = '7.0'
+    ss.tvos.deployment_target = '9.0'
+    ss.dependency 'AFNetworking/NSURLSession'
 
-  #   ss.public_header_files = 'UIKit+AFNetworking/*.h'
-  #   ss.source_files = 'UIKit+AFNetworking'
-  # end
+    ss.public_header_files = 'UIKit+AFNetworking/*.h'
+    ss.source_files = 'UIKit+AFNetworking'
+  end
 end
